@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-deployment
+  namespace: app1
+  labels:
+    app: app1-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: app1-deployment
+      namespace: app1
+      labels:
+        app: app1-deployment
+    spec:
+      containers:
+      - name: app1-deployment
+        image: appmigacr.azurecr.io/nginx:v1
+        env:
+        - name: APPVersion
+          value: version1
+        - name: ENVIRONMENT
+          value: Dev
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: app1-secret
+  selector:
+    matchLabels:
+      app: "app1-deployment"
+      envFrom:
+        - configMapRef:
+        name: poc-node-app-configmap

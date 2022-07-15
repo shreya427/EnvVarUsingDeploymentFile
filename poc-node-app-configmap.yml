@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: app1-configmap
+    labels:
+     app: app1-deployment
+data:
+    Message: EnvVarPOC456
